@@ -59,7 +59,7 @@ export class UserService {
     let params = new HttpParams()
       .set("lastUpdate", this.lastIndexedDbUser.lastUpdate.toString());
 
-    return await this.httpClient.get<User[]>(`${API}${this.lastIndexedDbUser.lastUpdate}`)
+    return await this.httpClient.get<User[]>(`${API}userssync/${this.lastIndexedDbUser.lastUpdate}`)
       .toPromise()
       .then(users => {
         return users;
