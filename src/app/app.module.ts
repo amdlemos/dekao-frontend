@@ -1,4 +1,4 @@
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule } from "@auth0/angular-jwt";
 // angular modules
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,16 +48,7 @@ import { Dexie } from 'dexie'
     HttpClientModule,
     LayoutModule,    
     FormsModule,
-    ReactiveFormsModule,
-    // MatToolbarModule,
-    // MatButtonModule,
-    // MatSidenavModule,
-    // MatIconModule,
-    // MatListModule,
-    // MatInputModule,
-    // MatSelectModule,
-    // MatRadioModule,
-    // MatCardModule    
+    ReactiveFormsModule,    
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {

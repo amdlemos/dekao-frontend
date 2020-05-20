@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
 import { DekaoDatabase } from '../dexie/dekaoDb';
 import * as moment from 'moment';
 
-
+const API = 'http://localhost:4040/';
 
 @Injectable()
 export class UserService {
@@ -59,7 +59,7 @@ export class UserService {
     let params = new HttpParams()
       .set("lastUpdate", this.lastIndexedDbUser.lastUpdate.toString());
 
-    return await this.httpClient.get<User[]>(`http://localhost:3000/users/${this.lastIndexedDbUser.lastUpdate}`)
+    return await this.httpClient.get<User[]>(`${API}${this.lastIndexedDbUser.lastUpdate}`)
       .toPromise()
       .then(users => {
         return users;
@@ -192,7 +192,7 @@ export class UserService {
 
     console.log(JSON.stringify(obj));
     //post an item
-    return this.httpClient.post("http://localhost:3000/users", JSON.stringify(obj), { headers: headers });
+    return this.httpClient.post(`${API}users`, JSON.stringify(obj), { headers: headers });
   }
 
   // ---------- delete an users from the database
@@ -201,7 +201,7 @@ export class UserService {
       .set('Content-Type', 'application/json');
 
     return this.httpClient.request("delete",
-      "http://localhost:3000/users/" + user["_id"],
+      `${API}users/` + user["_id"],
       {
         headers: headers,
         body: JSON.stringify(user)
