@@ -1,0 +1,7 @@
+.app-fab--absolute {
+  background-color:#673ab7;
+  color: white;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}

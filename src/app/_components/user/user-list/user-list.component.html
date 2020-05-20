@@ -1,0 +1,16 @@
+<div class="users">
+  <mat-list>
+    <mat-list-item *ngFor="let user of this.users">
+      <mat-icon mat-list-icon>person</mat-icon>
+      <div mat-line>{{user.username}}</div>
+      <div mat-line> {{user.email}} </div>      
+      <mat-action-list>
+        <button mat-flat-button color="warn" (click)="delete(user._id)">Delete</button>        
+        <button mat-flat-button color="accent"> Edit </button>
+      </mat-action-list>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+
+  <app-fab-add-button></app-fab-add-button>  
+</div>
