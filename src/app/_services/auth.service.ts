@@ -28,7 +28,7 @@ export class AuthService {
     ) { }
 
   login(login: Login) {
-    console.log('auth service: ', login);
+    console.log('Attempt to login.');
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
     console.log
@@ -41,6 +41,7 @@ export class AuthService {
   }
 
   logout(redirect: string) {
+    console.log('Logout.')
     localStorage.removeItem('token');
     localStorage.removeItem('expires_at');
 
@@ -48,26 +49,26 @@ export class AuthService {
       this.router.navigate([redirect]);
   }
 
-  async isLoggedIn() {
-    console.log('esta logado?')
+  async isLoggedIn() {    
     const authenticated = await moment().isBefore(this.getExpiration());
     await this.isAuthenticated.next(authenticated);
-    console.log(authenticated)
+    
+    console.log('Checking if the user is logged in:', authenticated);
     return await authenticated;
   }
 
   private setSession(authResult) {
-    console.log('Set session:', authResult)
+    console.log('User is logged, set session.')
     const token = authResult.access_token;    
     const payload = <JWTPayload>jwtDecode(token);
-    const expiresAt = moment.unix(payload.exp);
-    console.log('expiresAt', expiresAt)
+    const expiresAt = moment.unix(payload.exp);    
 
     localStorage.setItem('token', authResult.token);
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
   }
 
   getExpiration() {
+    console.log('Getting token expiration date.');
     const expiration = localStorage.getItem('expires_at');
     const expiresAt = JSON.parse(expiration);
 
