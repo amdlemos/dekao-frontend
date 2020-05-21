@@ -1,14 +1,10 @@
-import { map, tap, catchError } from 'rxjs/operators';
 import { User } from '../_models/user.model';
 import { Injectable } from '@angular/core';
-//import { UUID } from 'angular2-uuid';
 import { OfflineService } from './offline.service';
-import Dexie from 'dexie'; // wrapper for IndexedDB
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Router, ActivatedRoute, Route } from "@angular/router";
 import { Observable, of } from 'rxjs';
 import { DekaoDatabase } from '../dexie/dekaoDb';
-import * as moment from 'moment';
 
 const API = 'http://localhost:4040/';
 
@@ -92,7 +88,7 @@ export class UserService {
     this.dekaoDb.users.add(newUser)
       .then(async () => {
         const allItems: any[] = await this.dekaoDb["users"].toArray();
-        console.log('saved in DB, DB is now', allItems);
+        //console.log('saved in DB, DB is now', allItems);
       })
       .catch(e => {
         alert('Error: ' + (e.stack || e));
@@ -181,8 +177,7 @@ export class UserService {
 
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
-
-    console.log(headers)
+    
     let obj = {
       username: itemObj["username"],
       email: itemObj["email"],
@@ -190,7 +185,7 @@ export class UserService {
       done: false
     }
 
-    console.log(JSON.stringify(obj));
+    console.log("User to post", JSON.stringify(obj));
     //post an item
     return this.httpClient.post(`${API}users`, JSON.stringify(obj), { headers: headers });
   }

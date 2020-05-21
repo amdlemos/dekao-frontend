@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/_services/auth.service';
 import { JwtModule } from "@auth0/angular-jwt";
 // angular modules
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -21,20 +22,12 @@ import { OfflineService } from './_services/offline.service';
 import { UserService } from './_services/user.service';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from 'src/app/modules/material/material-module';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './home/home.component';
 
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCardModule } from '@angular/material/card';
 import { FabAddButtonComponent } from './_components/buttons/fab/fab-add-button/fab-add-button.component';
 import { DekaoDatabase } from './dexie/dekaoDb';
-import { Dexie } from 'dexie'
+import { LoginComponent } from './_components/login/login.component'
+import { AuthGuard } from './_services/auth.guard';
 
 
 
@@ -61,9 +54,10 @@ import { Dexie } from 'dexie'
   declarations: [
     AppComponent,    
     UserListComponent,
-    UserFormComponent,    
+    UserFormComponent,        
     HomeComponent,    
-    FabAddButtonComponent    
+    FabAddButtonComponent, 
+    LoginComponent,
    
   ],
   bootstrap: [
@@ -72,7 +66,9 @@ import { Dexie } from 'dexie'
   providers: [    
     UserService,
     OfflineService, 
-    DekaoDatabase   
+    DekaoDatabase,
+    AuthService,
+    AuthGuard, 
   ],
  
 })
