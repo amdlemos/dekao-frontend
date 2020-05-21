@@ -16,6 +16,9 @@ const API = 'http://localhost:4040/';
   providedIn: 'root'
 })
 export class AuthService {
+  getToken() {
+    return localStorage.getItem('token');
+  }
 
   headers = new HttpHeaders()
     .set('Content-Type', 'application/json');
@@ -32,7 +35,7 @@ export class AuthService {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
     console.log
-    return this.http.post<{ access_token: string }>(`${API}auth/login`, JSON.stringify(login), { headers: headers })
+    return this.http.post(`${API}auth/login`, JSON.stringify(login), { headers: headers })
       .subscribe(res => {
         this.isAuthenticated.next(true);
         this.setSession(res);
@@ -63,7 +66,7 @@ export class AuthService {
     const payload = <JWTPayload>jwtDecode(token);
     const expiresAt = moment.unix(payload.exp);    
 
-    localStorage.setItem('token', authResult.token);
+    localStorage.setItem('token', token);
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
   }
 

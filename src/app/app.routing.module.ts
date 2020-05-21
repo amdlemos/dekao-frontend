@@ -3,9 +3,9 @@ import { CustomersComponent } from './_components/customers/customers.component'
 import { LoginComponent } from './_components/login/login.component';
 import { UserFormComponent } from './_components/user/user-form/user-form.component';
 import { UserListComponent } from './_components/user/user-list/user-list.component'
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './_services/auth.guard';
+import { AuthGuard } from './_services/auth-guard.service';
 import { HomeComponent } from './_components/home/home.component';
 
 

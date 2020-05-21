@@ -4,7 +4,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,9 +28,10 @@ import { MaterialModule } from 'src/app/modules/material/material-module';
 import { FabAddButtonComponent } from './_components/buttons/fab/fab-add-button/fab-add-button.component';
 import { DekaoDatabase } from './dexie/dekaoDb';
 import { LoginComponent } from './_components/login/login.component'
-import { AuthGuard } from './_services/auth.guard';
+import { AuthGuard } from './_services/auth-guard.service';
 import { HomeComponent } from './_components/home/home.component';
 import { CustomersComponent } from './_components/customers/customers.component';
+import { AuthInterceptor } from './_services/auth-interceptor.service';
 
 
 
@@ -47,10 +48,10 @@ import { CustomersComponent } from './_components/customers/customers.component'
     FormsModule,
     ReactiveFormsModule,    
     JwtModule.forRoot({
-      config: {
+      config: { 
         tokenGetter: function  tokenGetter() {
-             return     localStorage.getItem('access_token');},
-        whitelistedDomains: ['localhost:3000'],
+             return     localStorage.getItem('token');},
+        whitelistedDomains: [`localhost:3000`],
         blacklistedRoutes: ['http://localhost:3000/auth/login']
       }
     })
@@ -72,7 +73,13 @@ import { CustomersComponent } from './_components/customers/customers.component'
     OfflineService, 
     DekaoDatabase,
     AuthService,
-    AuthGuard, 
+    AuthGuard,     
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    
   ],
  
 })
