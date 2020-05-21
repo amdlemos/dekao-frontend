@@ -1,20 +1,37 @@
 import { AuthService } from 'src/app/_services/auth.service';
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {  
-  userForm = this.fb.group({
-    username: [null, Validators.required],   
-    password: [null],
-   
-  }); 
+export class LoginComponent implements OnInit {    
+  userForm: FormGroup;
+  private returnUrl: string;
+  
+  constructor(
+    private fb: FormBuilder, 
+    private _authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,) {}
 
-  constructor(private fb: FormBuilder, private _authService: AuthService) {}
+  async ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/home';
+
+    this.userForm = this.fb.group({
+      username: ['', Validators.required],   
+      password: [''],
+     
+    }); 
+
+    if (await this._authService.isLoggedIn()) {
+      await this.router.navigate(['/users']);
+    }
+  }
+
 
   onSubmit() {    
        this._authService.login(this.userForm.value);

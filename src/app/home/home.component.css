@@ -14,8 +14,12 @@
   background: inherit;
 }
 
-mat-sidenav {
-  background-color: white;
+.mat-sidenav {
+  background-color:cornflowerblue;
+}
+
+.mat-sidenav-content{
+  background-color: lightgray;
 }
 
 .mat-toolbar.mat-primary {
@@ -26,4 +30,9 @@ mat-sidenav {
 
 .mat-drawer-container {
   background-color: white;
+}
+
+.expanded-toolbar {
+  justify-content: space-between;
+  align-items: center;
 }

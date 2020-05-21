@@ -2,6 +2,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { JwtModule } from "@auth0/angular-jwt";
 // angular modules
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserModule } from '@angular/platform-browser';
@@ -35,7 +36,8 @@ import { AuthGuard } from './_services/auth.guard';
   imports: [
     BrowserModule,
     MaterialModule,
-    BrowserAnimationsModule,    
+    BrowserAnimationsModule, 
+    FlexLayoutModule,   
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),    
     HttpClientModule,

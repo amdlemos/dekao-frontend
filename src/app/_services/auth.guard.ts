@@ -8,19 +8,15 @@ export class AuthGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  canActivate() {
-    if (this.authService.isLoggedIn()) {
-      //
-      // Implementar refreshToken;
-      //
-      //this.authService.refreshToken();
+  async canActivate() {
+    console.log("authguard", this.authService.isLoggedIn())
+    if (! await this.authService.isLoggedIn()) {
+      await this.router.navigate(['login']);
+      return false;
+     
+    } else {     
 
       return true;
-    } else {
-      this.authService.logout();
-      this.router.navigate(['login']);
-
-      return false;
     }
   }
 }

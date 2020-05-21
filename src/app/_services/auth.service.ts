@@ -6,6 +6,8 @@ import * as jwtDecode from 'jwt-decode';
 import { JWTPayload } from 'src/app/_models/jwt-payload.model';
 // other
 import * as moment from 'moment';
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 const API = 'http://localhost:4040/';
@@ -18,9 +20,12 @@ export class AuthService {
   headers = new HttpHeaders()
     .set('Content-Type', 'application/json');
 
-  private authenticated = false;
+  public isAuthenticated = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    ) { }
 
   login(login: Login) {
     console.log('auth service: ', login);
@@ -29,19 +34,26 @@ export class AuthService {
     console.log
     return this.http.post<{ access_token: string }>(`${API}auth/login`, JSON.stringify(login), { headers: headers })
       .subscribe(res => {
-        this.authenticated = true;
+        this.isAuthenticated.next(true);
         this.setSession(res);
-        //localStorage.setItem('access_token', res.access_token);
+        this.router.navigate(['/users']);
       });
   }
 
-  logout() {
+  logout(redirect: string) {
     localStorage.removeItem('token');
     localStorage.removeItem('expires_at');
+
+    this.isAuthenticated.next(false);
+      this.router.navigate([redirect]);
   }
 
-  isLoggedIn(): boolean {
-    return moment().isBefore(this.getExpiration());
+  async isLoggedIn() {
+    console.log('esta logado?')
+    const authenticated = await moment().isBefore(this.getExpiration());
+    await this.isAuthenticated.next(authenticated);
+    console.log(authenticated)
+    return await authenticated;
   }
 
   private setSession(authResult) {
@@ -49,6 +61,7 @@ export class AuthService {
     const token = authResult.access_token;    
     const payload = <JWTPayload>jwtDecode(token);
     const expiresAt = moment.unix(payload.exp);
+    console.log('expiresAt', expiresAt)
 
     localStorage.setItem('token', authResult.token);
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
