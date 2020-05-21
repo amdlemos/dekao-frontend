@@ -36,7 +36,7 @@ export class AuthService {
       .subscribe(res => {
         this.isAuthenticated.next(true);
         this.setSession(res);
-        this.router.navigate(['/users']);
+        this.router.navigate(['/']);
       });
   }
 

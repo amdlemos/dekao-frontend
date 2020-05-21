@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     }); 
 
     if (await this._authService.isLoggedIn()) {
-      await this.router.navigate(['/users']);
+      // await this.router.navigate(['/users']);
     }
   }
 

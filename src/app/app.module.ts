@@ -23,12 +23,14 @@ import { OfflineService } from './_services/offline.service';
 import { UserService } from './_services/user.service';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from 'src/app/modules/material/material-module';
-import { HomeComponent } from './home/home.component';
+
 
 import { FabAddButtonComponent } from './_components/buttons/fab/fab-add-button/fab-add-button.component';
 import { DekaoDatabase } from './dexie/dekaoDb';
 import { LoginComponent } from './_components/login/login.component'
 import { AuthGuard } from './_services/auth.guard';
+import { HomeComponent } from './_components/home/home.component';
+import { CustomersComponent } from './_components/customers/customers.component';
 
 
 
@@ -59,7 +61,7 @@ import { AuthGuard } from './_services/auth.guard';
     UserFormComponent,        
     HomeComponent,    
     FabAddButtonComponent, 
-    LoginComponent,
+    LoginComponent, CustomersComponent,
    
   ],
   bootstrap: [

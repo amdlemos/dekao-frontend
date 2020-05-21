@@ -1,17 +1,20 @@
-import { HomeComponent } from './home/home.component';
+import { CustomersComponent } from './_components/customers/customers.component';
+
 import { LoginComponent } from './_components/login/login.component';
 import { UserFormComponent } from './_components/user/user-form/user-form.component';
 import { UserListComponent } from './_components/user/user-list/user-list.component'
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './_services/auth.guard';
+import { HomeComponent } from './_components/home/home.component';
 
 
 const APP_ROUTES: Routes = [
-  { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
-  { path: 'users/new', component: UserFormComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] }
+  { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
+  { path: 'users/new', component: UserFormComponent, canActivate: [AuthGuard] },    
+  { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard] },
 
 
 ];
