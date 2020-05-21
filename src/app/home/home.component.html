@@ -17,20 +17,21 @@
       aria-label="Toggle sidenav"
       mat-icon-button
       (click)="drawer.toggle()"
-      *ngIf="isHandset$ | async">
+      *ngIf="isHandset$ | async"
+      >
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
       <button mat-button routerLink="/home"><mat-icon>home</mat-icon></button>
      
-      <span>{{title}}</span>
-      <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+      <span fxShow="false" fxShow.gt-sm>{{title}}</span>
+      <div fxLayout="row">
         <button mat-button routerLink="/login" *ngIf="!isAuthenticated">
           <mat-icon>power_settings_new</mat-icon>
-          Login
+          <span fxShow="false" fxShow.gt-sm>Login</span>
         </button>
         <button mat-button *ngIf="isAuthenticated" (click)="logout()">
           <mat-icon>exit_to_app</mat-icon>
-          Logout
+          <span fxShow="false" fxShow.gt-sm>Logout</span>
         </button>       
       </div>
     </mat-toolbar>
