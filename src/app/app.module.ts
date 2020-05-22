@@ -1,3 +1,4 @@
+import { CustomersModule } from './modules/customers/customers.module';
 import { AuthService } from 'src/app/_services/auth.service';
 import { JwtModule } from "@auth0/angular-jwt";
 // angular modules
@@ -30,13 +31,15 @@ import { DekaoDatabase } from './dexie/dekaoDb';
 import { LoginComponent } from './_components/login/login.component'
 import { AuthGuard } from './_services/auth-guard.service';
 import { HomeComponent } from './_components/home/home.component';
-import { CustomersComponent } from './_components/customers/customers.component';
 import { AuthInterceptor } from './_services/auth-interceptor.service';
+import { DialogBoxComponent } from './_components/dialog-box/dialog-box.component';
+import { CommonModule } from '@angular/common';
 
 
 
 @NgModule({  
   imports: [
+    CommonModule,
     BrowserModule,
     MaterialModule,
     BrowserAnimationsModule, 
@@ -54,15 +57,20 @@ import { AuthInterceptor } from './_services/auth-interceptor.service';
         whitelistedDomains: [`localhost:3000`],
         blacklistedRoutes: ['http://localhost:3000/auth/login']
       }
-    })
+    }),
+    CustomersModule,
   ],    
+  entryComponents: [
+    DialogBoxComponent
+  ],
   declarations: [
     AppComponent,    
     UserListComponent,
     UserFormComponent,        
     HomeComponent,    
     FabAddButtonComponent, 
-    LoginComponent, CustomersComponent,
+    LoginComponent, 
+    DialogBoxComponent,
    
   ],
   bootstrap: [
@@ -80,7 +88,6 @@ import { AuthInterceptor } from './_services/auth-interceptor.service';
       multi: true,
     },
     
-  ],
- 
+  ] 
 })
 export class AppModule { }

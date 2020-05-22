@@ -1,4 +1,4 @@
-import { CustomersComponent } from './_components/customers/customers.component';
+import { CustomersListComponent } from './modules/customers/components/customers-list/customers-list.component';
 
 import { LoginComponent } from './_components/login/login.component';
 import { UserFormComponent } from './_components/user/user-form/user-form.component';
@@ -14,7 +14,7 @@ const APP_ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
   { path: 'users/new', component: UserFormComponent, canActivate: [AuthGuard] },    
-  { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard] },
+  { path: 'customers', component: CustomersListComponent, canActivate: [AuthGuard] },
 
 
 ];

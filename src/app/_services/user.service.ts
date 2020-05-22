@@ -42,6 +42,14 @@ export class UserService {
     return await this.getAllUsersFromIndexedDb();
   }
 
+  async getAll() {
+    return await this.httpClient.get<User[]>(`${API}users/`)
+    .toPromise()
+    .then(users => {
+      return users;
+    });
+  }
+
   // ----------- get all users from indexedDb
   async getAllUsersFromIndexedDb(): Promise<User[]> {
     console.log('Get all users from IndexedDb')
@@ -163,12 +171,7 @@ export class UserService {
       //this.addToDeleteDatabase(user);
     } else {
 
-      this.removeUser(user).subscribe(res => {
-        console.log(res);
-        this.router.navigateByUrl('/users', { skipLocationChange: true }).then(() =>
-          this.router.navigate(["/users"]));
-      })
-
+      return this.removeUser(user);     
     }
   }
 
@@ -191,17 +194,18 @@ export class UserService {
   }
 
   // ---------- delete an users from the database
-  removeUser(user: any) {
+  removeUser(user: any): Observable<any> {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
-
-    return this.httpClient.request("delete",
-      `${API}users/` + user["_id"],
-      {
-        headers: headers,
-        body: JSON.stringify(user)
-
-      })
+    console.log('entrou no remove')
+    return this.httpClient.request("delete", `${API}users/` + user["_id"], {
+      headers: headers,
+      body: JSON.stringify(user)
+    })
+    // .subscribe(res => { 
+    //   console.log('dentro do subscribe', res);
+    //   return res
+    // });
   }
 
 

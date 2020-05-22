@@ -1,16 +1,28 @@
-<div class="users">
-  <mat-list>
-    <mat-list-item *ngFor="let user of this.users">
-      <mat-icon mat-list-icon>person</mat-icon>
-      <div mat-line>{{user.username}}</div>
-      <div mat-line> {{user.email}} </div>      
-      <mat-action-list>
-        <button mat-flat-button color="warn" (click)="delete(user._id)">Delete</button>        
-        <button mat-flat-button color="accent"> Edit </button>
-      </mat-action-list>
-      <mat-divider></mat-divider>
-    </mat-list-item>
-  </mat-list>
+<div style="padding: 30px">
+  <table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+    <!-- Username Column -->
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef>Username</th>
+      <td mat-cell *matCellDef="let element">{{element.username}}</td>
+    </ng-container>
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{element.email}}</td>
+    </ng-container>
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Delete</th>
+      <td mat-cell *matCellDef="let element" class="action-link">    
 
-  <app-fab-add-button></app-fab-add-button>  
+        <button mat-icon-button color="warn" (click)="openDialog('Excluir',element)">
+          <mat-icon class="mat-18">delete</mat-icon>
+        </button>
+
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <app-fab-add-button></app-fab-add-button>
 </div>
