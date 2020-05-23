@@ -14,6 +14,7 @@ const APP_ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
   { path: 'users/new', component: UserFormComponent, canActivate: [AuthGuard] },    
+  { path: 'users/edit/:id', component: UserFormComponent, canActivate: [AuthGuard] },    
   { path: 'customers', component: CustomersListComponent, canActivate: [AuthGuard] },
 
 

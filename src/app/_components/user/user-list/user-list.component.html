@@ -10,17 +10,25 @@
       <th mat-header-cell *matHeaderCellDef>Email</th>
       <td mat-cell *matCellDef="let element">{{element.email}}</td>
     </ng-container>
-    <!-- Action Column -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef>Delete</th>
-      <td mat-cell *matCellDef="let element" class="action-link">    
-
+    <!-- Excluir Column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Excluir</th>
+      <td mat-cell *matCellDef="let element" class="action-link">
         <button mat-icon-button color="warn" (click)="openDialog('Excluir',element)">
           <mat-icon class="mat-18">delete</mat-icon>
         </button>
-
       </td>
     </ng-container>
+     <!-- Editar Column -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>Editar</th>
+      <td mat-cell *matCellDef="let element" class="action-link">
+        <button mat-icon-button color="" (click)="onEdit(element._id)">
+          <mat-icon class="mat-18">edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>

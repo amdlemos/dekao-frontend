@@ -17,7 +17,7 @@ export class UserListComponent implements OnInit {
 
   public dataSource: User[];
   public userSubscription: Subscription;
-  displayedColumns: string[] = ['username', 'email', 'action'];
+  displayedColumns: string[] = ['username', 'email', 'edit', 'delete'];
 
   constructor(
     private userService: UserService,
@@ -27,10 +27,19 @@ export class UserListComponent implements OnInit {
 
   }
 
+  ngOnInit(): void {
+    this.getUsers();
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription !== undefined) {
+      this.userSubscription.unsubscribe()
+    }
+  }
+
   async getUsers() {
     this.dataSource = await this.userService.getAll();
   }
-
 
   delete(userId: string) {
     return this.userService.deleteUser(userId);
@@ -51,12 +60,23 @@ export class UserListComponent implements OnInit {
 
       if (result.event == 'Excluir') {
         this.delete(result.data._id).subscribe(res => {          
-          if (res.n === 1) {
+          if (res.n === 1) {            
             this.dataSource = this.deleteRowData(result.data);
           }
         });
       }
     });
+  }  
+
+  deleteRowData(row_obj) {   
+    console.log('row_obj', row_obj)
+    return this.dataSource = this.dataSource.filter((value, key) => {
+      
+      return value._id != row_obj._id;
+    });
+  }  
+  onEdit(userId){
+    this.router.navigate(['/users/edit', userId]);    
   }
 
   // addRowData(row_obj) {
@@ -76,26 +96,5 @@ export class UserListComponent implements OnInit {
   //     return true;
   //   });
   // }
-
-  deleteRowData(row_obj) {   
-    console.log('row_obj', row_obj)
-    return this.dataSource = this.dataSource.filter((value, key) => {
-      
-      return value._id != row_obj._id;
-    });
-  }
-
-
-
-
-  ngOnInit(): void {
-    this.getUsers();
-  }
-
-  ngOnDestroy() {
-    if (this.userSubscription !== undefined) {
-      this.userSubscription.unsubscribe()
-    }
-  }
 
 }

@@ -11,6 +11,7 @@ export class User implements IUser {
         public username: string,
         public email: string,
         public password: string,
+        public createdDate: Date,
         public lastUpdate: Date) {
 
         // _id: username;

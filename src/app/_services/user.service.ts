@@ -6,6 +6,9 @@ import { Router, ActivatedRoute, Route } from "@angular/router";
 import { Observable, of } from 'rxjs';
 import { DekaoDatabase } from '../dexie/dekaoDb';
 
+
+const headers = new HttpHeaders()
+    .set('Content-Type', 'application/json');
 const API = 'http://localhost:4040/';
 
 @Injectable()
@@ -141,10 +144,14 @@ export class UserService {
 
   }
 
+  getById(userId): Observable<User>{
+    return this.httpClient.get<User>(`${API}users/${userId}`)
+  }
+
   // ---------- add the users
-  addUser(user: User) {
+  add(user: User) {
     //add the "done" property
-    user["done"] = false;
+    //user["done"] = false;
 
     // save into the indexedDB if the connection is lost
     if (!this.offlineService.isOnline) {
@@ -156,6 +163,10 @@ export class UserService {
           this.router.navigate(["/users"]));
       });
     }
+  }
+
+  edit(user: User) {
+    return this.httpClient.put(`${API}users`,JSON.stringify(user), { headers: headers }).subscribe()
   }
 
   // ---------- delete user
@@ -188,7 +199,7 @@ export class UserService {
       done: false
     }
 
-    console.log("User to post", JSON.stringify(obj));
+    console.log("Attempt to add user:", JSON.stringify(obj.username));
     //post an item
     return this.httpClient.post(`${API}users`, JSON.stringify(obj), { headers: headers });
   }
