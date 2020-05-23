@@ -1,4 +1,4 @@
-import { CustomersService } from './../customers.service';
+import { CustomersService } from '../../customers.service';
 import { Component, OnInit } from '@angular/core';
 import { Customer } from 'src/app/_models/customer.model';
 
@@ -13,7 +13,7 @@ import { Customer } from 'src/app/_models/customer.model';
   styleUrls: ['./customers-list.component.css']
 })
 export class CustomersListComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['name', 'subscription', 'email', 'code'];
   public dataSource: Customer[];
 
   

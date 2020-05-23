@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CustomersService } from '../customers.service';
+import { CustomersService } from '../../customers.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';

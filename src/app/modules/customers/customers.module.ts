@@ -1,4 +1,4 @@
-import { CustomersService } from './components/customers.service';
+import { CustomersService } from './customers.service';
 import { MaterialModule } from './../material/material-module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
