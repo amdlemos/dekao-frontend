@@ -9,6 +9,7 @@ import { DekaoDatabase } from '../dexie/dekaoDb';
 
 const headers = new HttpHeaders()
     .set('Content-Type', 'application/json');
+    
 const API = 'http://localhost:4040/';
 
 @Injectable()
@@ -19,8 +20,7 @@ export class UserService {
   lastMongodbUser: User;
   lastIndexedDbUser: User;
 
-  headers = new HttpHeaders()
-    .set('Content-Type', 'application/json');
+ 
 
   constructor(private readonly offlineService: OfflineService,
     private dekaoDb: DekaoDatabase,
@@ -93,7 +93,8 @@ export class UserService {
       user.username,
       user.email,
       user.password,
-      user.lastUpdate);
+      user.lastUpdate,
+      user.createdDate);
 
     console.log('new user', newUser);
     this.dekaoDb.users.add(newUser)

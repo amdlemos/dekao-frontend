@@ -27,5 +27,6 @@ export interface IUser {
     username: string,
     email: string,
     password: string,
-    lastUpdate: Date
+    lastUpdate: Date,
+    createdDate: Date
 }

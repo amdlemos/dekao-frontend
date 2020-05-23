@@ -1,3 +1,4 @@
+import { CustomersService } from './components/customers.service';
 import { MaterialModule } from './../material/material-module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,6 +14,9 @@ import { BrowserModule } from '@angular/platform-browser';
     CommonModule, 
     MaterialModule,
   ],
+  providers:[
+    CustomersService
+  ]
  
 })
 export class CustomersModule { }

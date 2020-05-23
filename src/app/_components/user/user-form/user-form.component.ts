@@ -14,13 +14,9 @@ import * as moment from 'moment';
 export class UserFormComponent implements OnInit {
 
   form: FormGroup;
-
   private subscription: Subscription;
   private userId: string;
-  private isNew: boolean = true;
-  private title: string;
-
-
+  private isNew: boolean = true; 
 
   constructor(
     private fb: FormBuilder,
@@ -37,17 +33,16 @@ export class UserFormComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-    this.initForm();
+  ngOnInit(): void {    
     this.subscription = this.route.params.subscribe(
       (params: any) => {
-        // Verifica se é inclusão ou edição  
+       
         this.userId = params['id'];
-        console.log("entrou no subscription", this.userId)
+        
         if (this.userId != null) {
           this.isNew = false;
-          this._userService.getById(this.userId).subscribe(data => {
-            console.log("retorno do bet",data)
+          
+          this._userService.getById(this.userId).subscribe(data => {            
               this.form.patchValue({
                 _id: data._id,
                 username: data.username,
@@ -55,18 +50,11 @@ export class UserFormComponent implements OnInit {
                 lastUpdate: moment(data.lastUpdate).locale('pt-br').format('L'),
                 createdDate: moment(data.createdDate).locale('pt-br').format('L') ,
                 password: ""
-              })
-              
-            });
-          this.title = 'Editar';
+              })              
+            });          
         } else {
-          this.isNew = true;
-          this.title = 'Novo';
-          //this.user = new User();
+          this.isNew = true;        
         }
-
-
-
       })
   }
 
@@ -78,9 +66,5 @@ export class UserFormComponent implements OnInit {
       result = this._userService.add(userForm.value);
     else
       result = this._userService.edit(userForm.value);
-  }
-
-  initForm() {
-
   }
 }

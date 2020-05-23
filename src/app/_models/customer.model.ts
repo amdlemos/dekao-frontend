@@ -1,23 +1,39 @@
 export class Customer implements ICustomer{
-    id?: string;
+    _id?: string;
     name: string;
-    cpfCnpj: string;
-    email: string;
-    tel: string;
-    contactName: string;
-    contactCel: string;
-    salespeopleId: string;
-    lastUpdate: string;
+    fantasyName: string;    
+    subscription: number;    
+    phone: number;    
+    email: string;    
+    //address1th: Address;            
+    // contacts: Contact[];    
+    // otherAddress: Address[];    
+    // legalData: LegalData;
+
+    // sytem data     
+    code: string;     
+    sellerCode: string;    
+    sellerName: string;
+    lastUpdate: Date;    
+    createdDate: Date;
 }
 
 export interface ICustomer {
-    id?: string,
+    _id?: string,
     name: string,
-    cpfCnpj: string,
-    email: string,
-    tel: string,
-    contactName: string,
-    contactCel: string,
-    salespeopleId: string,
-    lastUpdate: string
+    fantasyName: string;    
+    subscription: number;    
+    phone: number;    
+    email: string;    
+    //address1th: Address;            
+    // contacts: Contact[];    
+    // otherAddress: Address[];    
+    // legalData: LegalData;
+
+    // sytem data     
+    code: string;     
+    sellerCode: string;    
+    sellerName: string;      
+    lastUpdate: Date;    
+    createdDate: Date;
 }

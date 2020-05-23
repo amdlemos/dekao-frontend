@@ -1,53 +1,76 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Customer } from 'src/app/_models/customer.model';
+import { Router } from '@angular/router';
+import { OfflineService } from 'src/app/_services/offline.service';
 
+const headers = new HttpHeaders()
+    .set('Content-Type', 'application/json');
 
+const API = 'http://localhost:4040/';
 @Injectable()
 export class CustomersService {
 
-    constructor(private http: HttpClient) {
+
+
+    constructor(
+        private readonly offlineService: OfflineService,
+        private http: HttpClient,
+        private router: Router) {
 
     }
 
-    findCourseById(customersId: number): Observable<Customer> {
-        return this.http.get<Customer>(`/customers/${customersId}`);
+    async getAll() {
+        return await this.http.get<Customer[]>(`${API}customers/`)
+            .toPromise()
+            .then(customers => {
+                return customers;
+            });
     }
 
-    findAllCourses(): Observable<Customer[]> {
-        return this.http.get('/customers')
-            .pipe(
-                map(res => res['payload'])
-            );
+    getById(customerId): Observable<Customer> {
+        return this.http.get<Customer>(`${API}customers/${customerId}`)
     }
 
-    findAllCourseLessons(customersId: number): Observable<Customer[]> {
-        return this.http.get('/customers', {
-            params: new HttpParams()
-                .set('courseId', customersId.toString())
-                .set('pageNumber', "0")
-                .set('pageSize', "1000")
-        }).pipe(
-            map(res => res["payload"])
-        );
+    // ---------- add the customers
+    add(customer: Customer) {
+        //add the "done" property
+        //customer["done"] = false;
+
+        // save into the indexedDB if the connection is lost
+        if (!this.offlineService.isOnline) {
+            console.log('Não é possível adicionar usuários quando se está offline.')
+        } else {
+            //post request to mongodb
+            this.post(customer).subscribe(res => {
+                this.router.navigateByUrl('/customers', { skipLocationChange: true }).then(() =>
+                    this.router.navigate(["/customers"]));
+            });
+        }
     }
 
-    findLessons(
-        courseId: number, filter = '', sortOrder = 'asc',
-        pageNumber = 0, pageSize = 3): Observable<Customer[]> {
+    edit(customer: Customer) {
+        return this.http.put(`${API}customers`, JSON.stringify(customer), { headers: headers }).subscribe()
+    }
 
-        return this.http.get('/customers', {
-            params: new HttpParams()
-                .set('courseId', courseId.toString())
-                .set('filter', filter)
-                .set('sortOrder', sortOrder)
-                .set('pageNumber', pageNumber.toString())
-                .set('pageSize', pageSize.toString())
-        }).pipe(
-            map(res => res["payload"])
-        );
+    // ---------- post an customer from the database
+    post(customer: Customer) {
+
+        const headers = new HttpHeaders()
+            .set('Content-Type', 'application/json');
+
+        // let obj = {
+        //     name: itemObj["name"],
+        //     email: itemObj["email"],
+        //     password: itemObj["password"],
+        //     done: false
+        // }
+
+        console.log("Attempt to add customer:", JSON.stringify(customer.name));
+        //post an item
+        return this.http.post(`${API}customers`, JSON.stringify(customer), { headers: headers });
     }
 
 }
